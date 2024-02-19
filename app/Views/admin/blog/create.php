@@ -8,12 +8,12 @@ require_once './app/Views/admin/navbar.php';
         <div class="container-fluid">
             <div class="row my-1">
                 <div class="col-sm-6">
-                    <h1 class="text-success">Create a new account</h1c>
+                    <h1 class="text-success">Create a new blog</h1c>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="index.php?act=">Home</a></li>
-                        <li class="breadcrumb-item active ">Create account</li>
+                        <li class="breadcrumb-item active ">Create blog</li>
                     </ol>
                 </div>
             </div>
@@ -23,7 +23,7 @@ require_once './app/Views/admin/navbar.php';
         <hr class="mt-0 mb-4">
         <div class="row d-flex justify-content-center">
             <div class="col-xl-10">
-                <!-- Account details card-->
+                <!-- blog details card-->
                 <div class='d-flex gap-3'>
 
                     <div class="row my-2">
@@ -33,27 +33,43 @@ require_once './app/Views/admin/navbar.php';
                     </div>
                     <div class="row my-2 w-100">
                         <div class="col-6 my-2">
-                            <a class="btn btn-outline-primary" href="<?= ROOT_PATH ?>admin/category" onclick="goBack()">Go to list</a>
+                            <a class="btn btn-outline-primary" href="<?= ROOT_PATH ?>admin/blog" onclick="goBack()">Go to list</a>
                         </div>
                     </div>
                 </div>
-                <form action="<?= ROOT_PATH ?>category/create" method="post" enctype="multipart/form-data">
+                <form action="<?= ROOT_PATH ?>blog/create" method="post" enctype="multipart/form-data">
                     <div class="card mb-4">
-                        <div class="card-header">Account Details</div>
                         <div class="card-body">
                             <form action="" method="post" enctype="multipart/form-data">
                                 <div class="mb-3">
-                                    <label class="small mb-1" for="inputUsername">Name Category</label>
-                                    <input class="form-control" id="inputUsername" type="text" placeholder="Name Category" name="category_name" required>
+                                    <label class="small mb-1" for="inputFirstName">Category</label>
+                                    <select name="cate_id" class="form-control" required>
+                                        <option value="">Choose a category</option>
+                                        <?php if (isset($categories)) : ?>
+                                            <?php foreach ($categories as $category) : ?>
+                                                <option value="<?= $category->id ?>"><?= $category->category_name ?></option>
+
+                                            <?php endforeach ?>
+                                        <?php endif; ?>
+                                    </select>
                                 </div>
                                 <div class="mb-3">
-                                    <label class="small mb-1" for="inputAvatar">Thumb Nail</label>
-                                    <input class="form-control" id="inputAvatar" type="file" placeholder="Thumb Nail" name="thumnail" required>
+                                    <label class="small mb-1" for="inputUsername">Title</label>
+                                    <input class="form-control" id="inputUsername" type="text" placeholder="Title..." name="title" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label class="small mb-1" for="inputFirstName">Description</label>
-                                    <input class="form-control" id="inputFirstName" type="text" placeholder="Description" name="description" required>
+                                    <label class="small mb-1" for="inputAvatar">Image</label>
+                                    <input class="form-control" id="inputAvatar" type="file" placeholder="Image" name="image" required>
                                 </div>
+                                <div class="mb-3">
+                                    <label class="small mb-1" for="inputAvatar">Description</label>
+                                    <input class="form-control" id="inputAvatar" type="text" placeholder="Description..." name="sub_content" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="small mb-1" for="inputFirstName">Content</label>
+                                    <textarea name="content" id="comment-review-text" cols="10" rows="4" placeholder="Write content..." class="form-control w-100"></textarea>
+                                </div>
+
                                 <div class="mb-3 form-group">
                                     <label class="small mb-1" for="inputEmailAddress">Status</label>
                                     <select name="status" class="form-control" required>

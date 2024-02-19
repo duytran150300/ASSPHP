@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="assets/css/vendor/vendor.min.css">
     <link rel="stylesheet" href="assets/css/plugins/plugins.min.css">
     <link rel="stylesheet" href="assets/css/style.min.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
 <body>
@@ -63,7 +63,7 @@
                                             </div>
                                         </li>
                                         <li class="has-dropdown">
-                                            <a href="blog-single-sidebar-left.html">Blog </a>
+                                            <a href="<?= ROOT_PATH ?>blog">Blog </a>
                                             <!-- Sub Menu -->
 
                                         </li>
@@ -102,9 +102,31 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#offcanvas-about" class="offacnvas offside-about offcanvas-toggle">
-                                        <i class="icon-menu"></i>
-                                    </a>
+                                    <?php if ($_SESSION) : ?>
+                                        <div class="dropdown">
+                                            <button class="btn  dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <img src="<?= ROOT_PATH ?>images/users/<?= $_SESSION['account']->avatar ?>" alt="" width="30" height="40" style="border-radius:50% ;">
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                <li><a class="dropdown-item" style="letter-spacing: 0px" href="<?= ROOT_PATH ?>account">My Account</a></li>
+                                                <li><a class="dropdown-item" style="letter-spacing: 0px" href="<?= ROOT_PATH ?>login">Logout</a></li>
+                                                <?php if ($_SESSION['account']->role === 1) : ?>
+                                                    <li><a class="dropdown-item" style="letter-spacing: 0px" href="<?= ROOT_PATH ?>admin">Amdin</a></li>
+                                                <?php endif ?>
+                                            </ul>
+                                        </div>l
+                                    <?php else : ?>
+                                        <div class="dropdown">
+                                            <button class="btn  dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="fa-solid fa-user fa-flip-horizontal fa-xl"></i>
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                <li><a class="dropdown-item" style="letter-spacing: 0px" href="<?= ROOT_PATH ?>login">Login</a></li>
+                                                <li><a class="dropdown-item" style="letter-spacing: 0px" href="<?= ROOT_PATH ?>register">Register</a></li>
+
+                                            </ul>
+                                        </div>
+                                    <?php endif ?>
                                 </li>
                             </ul>
                             <!-- End Header Action Link -->

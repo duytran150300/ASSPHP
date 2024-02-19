@@ -9,12 +9,16 @@ class CategoryController extends BaseController
     public function lists()
     {
         $categories = CategoryModel::all();
-        return $this->view("admin/category/lists", ['categories' => $categories]);
+        $message = $_COOKIE['message'] ?? '';
+
+        return $this->view("admin/category/lists", ['categories' => $categories, "message" => $message]);
     }
     public function add()
     {
         $categories = CategoryModel::all();
-        return $this->view("admin/category/create", ['categories' => $categories]);
+        $message = $_COOKIE['message'] ?? '';
+
+        return $this->view("admin/category/create", ['categories' => $categories, "message" => $message]);
     }
     public function store()
     {
@@ -24,7 +28,9 @@ class CategoryController extends BaseController
         move_uploaded_file($file['tmp_name'], "images/products/" . $image);
         $data['thumnail'] = $image;
         CategoryModel::insert($data);
-        header("Location: " . ROOT_PATH . 'admin/category');
+        setcookie("message", "Thêm dữ liệu thành công", time() + 2);
+
+        header("Location: " . ROOT_PATH . "admin/category");
         die;
     }
     public function getInfoCategory()
@@ -32,8 +38,10 @@ class CategoryController extends BaseController
         if (isset($_GET['id'])) {
             $id = $_GET['id'];
         }
+        $message = $_COOKIE['message'] ?? '';
+
         $category = CategoryModel::find($id);
-        return $this->view('admin/category/edit', ['category' => $category]);
+        return $this->view('admin/category/edit', ['category' => $category, "message" => $message]);
     }
     public function updateCategory()
     {
@@ -51,7 +59,9 @@ class CategoryController extends BaseController
         }
         $data['thumnail'] = $image;
         CategoryModel::update($data, $id);
-        header("Location: " . ROOT_PATH . 'admin/category');
+        setcookie("message", "Cập nhật dữ liệu thành công", time() + 2);
+
+        header("Location: " . ROOT_PATH . "admin/category");
         die;
     }
     public function deleteCategory()
@@ -59,6 +69,7 @@ class CategoryController extends BaseController
         if (isset($_GET['id'])) {
             $id = $_GET['id'];
             CategoryModel::delete($id);
+            setcookie("message", "Xóa dữ liệu thành công", time() + 2);
         }
         header("Location: " . ROOT_PATH . 'admin/category');
         die;

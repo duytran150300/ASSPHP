@@ -33,36 +33,50 @@ require_once './app/Views/admin/navbar.php';
                     </div>
                     <div class="row my-2 w-100">
                         <div class="col-6 my-2">
-                            <a class="btn btn-outline-primary" href="<?= ROOT_PATH ?>admin/category" onclick="goBack()">Go to list</a>
+                            <a class="btn btn-outline-primary" href="<?= ROOT_PATH ?>admin/blog" onclick="goBack()">Go to list</a>
                         </div>
                     </div>
                 </div>
-                <form action="<?= ROOT_PATH ?>category/create" method="post" enctype="multipart/form-data">
+                <form action="<?= ROOT_PATH ?>blog/edit?id=<?= $blog->id ?>" method="post" enctype="multipart/form-data">
                     <div class="card mb-4">
                         <div class="card-header">Account Details</div>
                         <div class="card-body">
                             <form action="" method="post" enctype="multipart/form-data">
                                 <div class="mb-3">
-                                    <label class="small mb-1" for="inputUsername">Name Category</label>
-                                    <input class="form-control" id="inputUsername" type="text" placeholder="Name Category" name="category_name" required>
+                                    <label class="small mb-1" for="inputFirstName">Category</label>
+                                    <select name="cate_id" class="form-control" required>
+                                        <option value="">Choose a category</option>
+                                        <?php if (isset($categories)) : ?>
+                                            <?php foreach ($categories as $category) : ?>
+                                                <option value="<?= $category->id ?>" <?php if ($category->id == $blog->cate_id) echo 'selected'; ?>>
+                                                    <?= $category->category_name ?>
+                                                </option>
+                                            <?php endforeach ?>
+                                        <?php endif; ?>
+                                    </select>
                                 </div>
                                 <div class="mb-3">
-                                    <label class="small mb-1" for="inputAvatar">Thumb Nail</label>
-                                    <input class="form-control" id="inputAvatar" type="file" placeholder="Thumb Nail" name="thumnail" required>
+                                    <label class="small mb-1" for="inputUsername">Title</label>
+                                    <input class="form-control" id="inputUsername" type="text" placeholder="Title..." name="title" value="<?= $blog->title ?>">
                                 </div>
                                 <div class="mb-3">
-                                    <label class="small mb-1" for="inputFirstName">Description</label>
-                                    <input class="form-control" id="inputFirstName" type="text" placeholder="Description" name="description" required>
+                                    <label class="small mb-1" for="inputAvatar">Description</label>
+                                    <input class="form-control" id="inputAvatar" type="text" placeholder="Description..." name="sub_content" value="<?= $blog->sub_content ?>">
                                 </div>
-                                <div class="mb-3 form-group">
+                                <div class="mb-3">
+                                    <label class="small mb-1" for="inputFirstName">Content</label>
+                                    <textarea name="content" id="comment-review-text" cols="10" rows="4" placeholder="Write content..." class="form-control w-100"><?= $blog->content ?></textarea>
+                                </div>
+
+                                <div class=" mb-3 form-group">
                                     <label class="small mb-1" for="inputEmailAddress">Status</label>
                                     <select name="status" class="form-control" required>
                                         <option value="">Choose a status</option>
-                                        <option value="0">0</option>
-                                        <option value="1">1</option>
+                                        <option value="0" <?php if ($blog->status === 0) echo 'selected' ?>>0</option>
+                                        <option value="1" <?php if ($blog->status === 1) echo 'selected' ?>>1</option>
                                     </select>
                                 </div>
-                                <input class="btn btn-primary" type="submit" value="Create">
+                                <input class="btn btn-primary" type="submit" value="Update">
                             </form>
                         </div>
                     </div>

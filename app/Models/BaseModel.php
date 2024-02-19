@@ -11,6 +11,10 @@ class BaseModel
     protected $sqlBuilder;
     protected $tableName;
     protected $primaryKey = 'id';
+    protected $email = 'email';
+    protected $username = 'username';
+    protected $cate_id = 'cate_id';
+
     public function __construct()
     {
         $host = HOSTNAME;
@@ -47,7 +51,56 @@ class BaseModel
         }
         return $result;
     }
+    public static function findByCategory($cate_id)
+    {
+        $model = new static;
+        $model->sqlBuilder = "SELECT * FROM $model->tableName WHERE $model->cate_id=:$model->cate_id";
+        $stmt = $model->conn->prepare($model->sqlBuilder);
+        $data = ["$model->cate_id" => $cate_id];
+        $stmt->execute($data);
+        $result = $stmt->fetchAll(PDO::FETCH_CLASS);
+        if (count($result) > 0) {
+            return $result[0];
+        }
+        return $result;
+    }
+    public static function findBySomeThing($email)
+    {
+        $model = new static;
+        $model->sqlBuilder = "SELECT * FROM $model->tableName WHERE $model->email=:$model->email";
+        $stmt = $model->conn->prepare($model->sqlBuilder);
+        $data = ["$model->email" => $email];
+        $stmt->execute($data);
+        $result = $stmt->fetchAll(PDO::FETCH_CLASS);
+        if (count($result) > 0) {
+            return $result[0];
+        }
+        return $result;
+    }
+    public static function findByUserName($username)
+    {
+        $model = new static;
+        $model->sqlBuilder = "SELECT * FROM $model->tableName WHERE $model->username=:$model->username";
+        $stmt = $model->conn->prepare($model->sqlBuilder);
+        $data = ["$model->username" => $username];
+        $stmt->execute($data);
+        $result = $stmt->fetchAll(PDO::FETCH_CLASS);
+        if (count($result) > 0) {
+            return $result[0];
+        }
+        return $result;
+    }
+    public static function getCategories()
+    {
+        $model = new static;
 
+        $model->sqlBuilder = "SELECT category.* FROM $model->tableName
+                JOIN category ON category.$model->primaryKey = $model->tableName.$model->cate_id";
+        $stmt = $model->conn->prepare($model->sqlBuilder);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
     public static function where($column, $condition, $value)
     {
         $model = new static;

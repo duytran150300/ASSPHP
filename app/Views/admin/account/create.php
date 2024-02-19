@@ -24,9 +24,17 @@ require_once './app/Views/admin/navbar.php';
         <div class="row d-flex justify-content-center">
             <div class="col-xl-10">
                 <!-- Account details card-->
-                <div class="row my-2">
-                    <div class="col-6 my-2">
-                        <a class="btn btn-outline-primary" href="javascript:void(0);" onclick="goBack()">Back</a>
+                <div class='d-flex gap-3'>
+
+                    <div class="row my-2">
+                        <div class="col-6 my-2">
+                            <a class="btn btn-outline-primary" href="javascript:void(0);" onclick="goBack()">Back</a>
+                        </div>
+                    </div>
+                    <div class="row my-2 w-100">
+                        <div class="col-6 my-2">
+                            <a class="btn btn-outline-primary" href="<?= ROOT_PATH ?>admin/account" onclick="goBack()">Go to list</a>
+                        </div>
                     </div>
                 </div>
                 <form action="<?= ROOT_PATH ?>account/create" method="post" enctype="multipart/form-data">
@@ -86,6 +94,13 @@ require_once './app/Views/admin/navbar.php';
     function goBack() {
         window.history.back();
     }
+    document.addEventListener('DOMContentLoaded', function() {
+        var toastElement = document.querySelector('#basicToast');
+        var toast = new bootstrap.Toast(toastElement);
+        setTimeout(function() {
+            toast.show();
+        }, 0);
+    });
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
 </body>

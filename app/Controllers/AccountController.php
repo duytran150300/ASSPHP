@@ -9,14 +9,18 @@ class AccountController extends BaseController
     public function lists()
     {
         $users = AccountModel::all();
-        return $this->view("admin/account/list", ['users' => $users]);
+        $message = $_COOKIE['message'] ?? '';
+
+        return $this->view("admin/account/list", ['users' => $users, "message" => $message]);
     }
     public function add()
     {
         $users = AccountModel::all();
+        $message = $_COOKIE['message'] ?? '';
+
         return $this->view(
             "admin/account/create",
-            ['users' => $users]
+            ['users' => $users, "message" => $message]
         );
     }
     public function store()
@@ -27,7 +31,9 @@ class AccountController extends BaseController
         move_uploaded_file($file['tmp_name'], "images/users/" . $image);
         $data['avatar'] = $image;
         AccountModel::insert($data);
-        header('Location: ' . ROOT_PATH . "admin/account");
+        setcookie("message", "Thêm dữ liệu thành công", time() + 2);
+
+        header('Location: ' . ROOT_PATH);
         die;
     }
 
@@ -39,9 +45,11 @@ class AccountController extends BaseController
             $id = $_GET['id'];
         }
         $user = AccountModel::find((int)$id);
+        $message = $_COOKIE['message'] ?? '';
+
         return $this->view(
             "admin/account/edit",
-            ['user' => $user]
+            ['user' => $user, "message" => $message]
         );
     }
     public function editAccount()
@@ -64,7 +72,10 @@ class AccountController extends BaseController
         $data['avatar'] = $image;
         var_dump($id);
         AccountModel::update($data, $id);
-        header('Location: ' . ROOT_PATH . "admin/account");
+        setcookie("message", "Cập nhật dữ liệu thành công", time() + 2);
+
+        redirect("");
+        // header('Location: ' . ROOT_PATH . "admin/account");
         die;
     }
     public function detailAccount()
@@ -83,6 +94,7 @@ class AccountController extends BaseController
         if (isset($_GET['id'])) {
             $id = $_GET['id'];
             AccountModel::delete((int)$id);
+            setcookie("message", "Cập nhật dữ liệu thành công", time() + 2);
         }
         header('Location: ' . ROOT_PATH . "admin/account");
         die;

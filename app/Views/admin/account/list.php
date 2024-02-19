@@ -80,6 +80,20 @@ require_once './app/Views/admin/navbar.php';
     <div class="card-footer border-0 py-5">
         <span class="text-muted text-sm">Showing 10 items out of 250 results found</span>
     </div>
+    <?php
+    if ($message) : ?>
+
+        <div class="toast-container position-fixed top-0 end-0 p-3">
+            <div id="basicToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header bg-primary text-light">
+                    <h5 class="my-0">Machi Shop</h5>
+                </div>
+                <div class="toast-body">
+                    <?= $message ?>
+                </div>
+            </div>
+        </div>
+    <?php endif ?>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
 <script>
@@ -88,6 +102,13 @@ require_once './app/Views/admin/navbar.php';
         return confirm('Do you want to delete ? ', name)
 
     }
+    document.addEventListener('DOMContentLoaded', function() {
+        var toastElement = document.querySelector('#basicToast');
+        var toast = new bootstrap.Toast(toastElement);
+        setTimeout(function() {
+            toast.show();
+        }, 0);
+    });
 </script>
 </body>
 

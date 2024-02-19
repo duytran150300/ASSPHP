@@ -1,5 +1,6 @@
 <?php
 require_once './app/Views/admin/navbar.php';
+
 ?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -33,39 +34,65 @@ require_once './app/Views/admin/navbar.php';
                     </div>
                     <div class="row my-2 w-100">
                         <div class="col-6 my-2">
-                            <a class="btn btn-outline-primary" href="<?= ROOT_PATH ?>admin/category" onclick="goBack()">Go to list</a>
+                            <a class="btn btn-outline-primary" href="<?= ROOT_PATH ?>admin/product" onclick="goBack()">Go to list</a>
                         </div>
                     </div>
                 </div>
-                <form action="<?= ROOT_PATH ?>category/edit?id=<?= $category->id ?>" method="post" enctype="multipart/form-data">
+                <form action="<?= ROOT_PATH ?>product/edit" method="post" enctype="multipart/form-data">
                     <div class="card mb-4">
                         <div class="card-header">Account Details</div>
                         <div class="card-body">
                             <form action="" method="post" enctype="multipart/form-data">
+                                <input type="hidden" name="id" value="<?= $product->id ?>">
                                 <div class="mb-3">
-                                    <label class="small mb-1" for="inputUsername">Name Category</label>
-                                    <input class="form-control" id="inputUsername" type="text" placeholder="Name Category" name="category_name" value="<?= $category->category_name ?>">
+                                    <label class="small mb-1" for="inputFirstName">Category</label>
+                                    <select name="id_category" class="form-control" required>
+                                        <option value="">Choose a category</option>
+                                        <?php if (isset($categories)) : ?>
+                                            <?php foreach ($categories as $category) : ?>
+                                                <option value="<?= $category->id ?>" <?php if ($category->id == $product->id_category) echo 'selected'; ?>>
+                                                    <?= $category->category_name ?>
+                                                </option>
+                                            <?php endforeach ?>
+                                        <?php endif; ?>
+                                    </select>
                                 </div>
                                 <div class="mb-3">
-                                    <label class="small mb-1" for="inputAvatar">Thumb Nail</label>
-                                    <input class="form-control" id="inputAvatar" type="file" placeholder="Thumb Nail" name="thumnail">
+                                    <label class="small mb-1" for="inputUsername">Product Name</label>
+                                    <input class="form-control" id="inputUsername" type="text" placeholder="Product Name" name="name" value="<?= $product->name ?>">
+                                </div>
+                                <div class="row gx-3 mb-3">
+                                    <div class="col-md-6">
+                                        <label class="small mb-1" for="inputFirstName">Price</label>
+                                        <input class="form-control" id="inputFirstName" type="text" placeholder="Price" name="price" value="<?= $product->price ?>">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="small mb-1" for="inputLastName">Quantity</label>
+                                        <input class="form-control" id="inputLastName" type="text" placeholder="Quantity" name="quantity" value="<?= $product->quantity ?>">
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="small mb-1" for="inputEmailAddress">Origin</label>
+                                    <input class="form-control" id="inputEmailAddress" type="text" placeholder="Origin" name="origin" value="<?= $product->origin ?>">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="small mb-1" for="inputAvatar">Image</label>
+                                    <input class="form-control" id="inputAvatar" type="file" placeholder="Image" name="images">
                                 </div>
                                 <div class="old-image">
                                     <p class="mt-3">Old Image:</p>
-                                    <?php if ($category && $category->thumnail) : ?>
-                                        <img src="<?= ROOT_PATH ?>images/products/<?= $category->thumnail ?>" height="200" alt="Old image" width="200" class="">
+                                    <?php if ($product && $product->images) : ?>
+                                        <img src="<?= ROOT_PATH ?>images/<?= $product->images ?>" height="200" alt="Old image" width="200" class="">
                                     <?php endif; ?>
                                 </div>
-                                <div class="mb-3">
-                                    <label class="small mb-1" for="inputFirstName">Description</label>
-                                    <input class="form-control" id="inputFirstName" type="text" placeholder="Description" name="description" value="<?= $category->description ?>">
-                                </div>
-                                <div class=" mb-3 form-group">
+
+                                <div class="mb-3 form-group">
                                     <label class="small mb-1" for="inputEmailAddress">Status</label>
                                     <select name="status" class="form-control" required>
                                         <option value="">Choose a status</option>
-                                        <option value="0" <?php if ($category->status === 0) echo 'selected' ?>>0</option>
-                                        <option value="1" <?php if ($category->status === 1) echo 'selected' ?>>1</option>
+                                        <option value="0" <?php if ($product->status === 0) echo 'selected' ?>>0</option>
+                                        <option value="1" <?php if ($product->status === 1) echo 'selected' ?>>1</option>
                                     </select>
                                 </div>
                                 <input class="btn btn-primary" type="submit" value="Update">
@@ -76,6 +103,8 @@ require_once './app/Views/admin/navbar.php';
             </div>
         </div>
     </div>
+
+
     <?php
     if ($message) : ?>
 

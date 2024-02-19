@@ -33,27 +33,51 @@ require_once './app/Views/admin/navbar.php';
                     </div>
                     <div class="row my-2 w-100">
                         <div class="col-6 my-2">
-                            <a class="btn btn-outline-primary" href="<?= ROOT_PATH ?>admin/category" onclick="goBack()">Go to list</a>
+                            <a class="btn btn-outline-primary" href="<?= ROOT_PATH ?>admin/product" onclick="goBack()">Go to list</a>
                         </div>
                     </div>
                 </div>
-                <form action="<?= ROOT_PATH ?>category/create" method="post" enctype="multipart/form-data">
+                <form action="<?= ROOT_PATH ?>product/create" method="post" enctype="multipart/form-data">
                     <div class="card mb-4">
                         <div class="card-header">Account Details</div>
                         <div class="card-body">
                             <form action="" method="post" enctype="multipart/form-data">
                                 <div class="mb-3">
-                                    <label class="small mb-1" for="inputUsername">Name Category</label>
-                                    <input class="form-control" id="inputUsername" type="text" placeholder="Name Category" name="category_name" required>
+                                    <label class="small mb-1" for="inputFirstName">Category</label>
+                                    <select name="id_category" class="form-control" required>
+                                        <option value="">Choose a category</option>
+                                        <?php if (isset($categories)) : ?>
+                                            <?php foreach ($categories as $category) : ?>
+                                                <option value="<?= $category->id ?>"><?= $category->category_name ?></option>
+
+                                            <?php endforeach ?>
+                                        <?php endif; ?>
+                                    </select>
                                 </div>
                                 <div class="mb-3">
-                                    <label class="small mb-1" for="inputAvatar">Thumb Nail</label>
-                                    <input class="form-control" id="inputAvatar" type="file" placeholder="Thumb Nail" name="thumnail" required>
+                                    <label class="small mb-1" for="inputUsername">Product Name</label>
+                                    <input class="form-control" id="inputUsername" type="text" placeholder="Product Name" name="name" required>
+                                </div>
+                                <div class="row gx-3 mb-3">
+                                    <div class="col-md-6">
+                                        <label class="small mb-1" for="inputFirstName">Price</label>
+                                        <input class="form-control" id="inputFirstName" type="text" placeholder="Price" name="price" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="small mb-1" for="inputLastName">Quantity</label>
+                                        <input class="form-control" id="inputLastName" type="text" placeholder="Quantity" name="quantity" required>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="small mb-1" for="inputEmailAddress">Origin</label>
+                                    <input class="form-control" id="inputEmailAddress" type="text" placeholder="Origin" name="origin" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label class="small mb-1" for="inputFirstName">Description</label>
-                                    <input class="form-control" id="inputFirstName" type="text" placeholder="Description" name="description" required>
+                                    <label class="small mb-1" for="inputAvatar">Image</label>
+                                    <input class="form-control" id="inputAvatar" type="file" placeholder="Image" name="images" required>
                                 </div>
+
                                 <div class="mb-3 form-group">
                                     <label class="small mb-1" for="inputEmailAddress">Status</label>
                                     <select name="status" class="form-control" required>
